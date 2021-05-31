@@ -1,0 +1,51 @@
+Node* rev(Node* head){
+        Node* prev=NULL,*curr=head;
+        while(curr!=NULL){
+            Node* temp=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=temp;
+        }
+        return prev;
+    }
+    struct Node* addTwoLists(struct Node* first, struct Node* second)
+    {
+        // code here
+        Node * head1=rev(first);
+        Node* head2=rev(second);
+        Node* temp1=head1,*temp2=head2,*prev=NULL;
+        int carry=0;
+        while(temp1!=NULL && temp2!=NULL){
+            int temp=temp1->data+temp2->data+carry;
+            temp1->data=temp%10;
+            carry=temp/10;
+            prev=temp1;
+            temp1=temp1->next;
+            temp2=temp2->next;
+        }
+        while(temp1!=NULL)
+        {
+            int temp=temp1->data+carry;
+            temp1->data=temp%10;
+            carry=temp/10;
+            prev=temp1;
+            temp1=temp1->next;
+        }
+        while(temp2!=NULL)
+        {
+            int temp=temp2->data+carry;
+            Node* nNode=new Node(temp%10);
+            prev->next=nNode;
+            prev=prev->next;
+            carry=temp/10;
+            temp2=temp2->next;
+        }
+        while(carry>0){
+            Node* nNode=new Node(carry%10);
+            prev->next=nNode;
+            prev=prev->next;
+            carry/=10;
+        }
+        Node* fhead=rev(head1);
+        return fhead;
+    }
