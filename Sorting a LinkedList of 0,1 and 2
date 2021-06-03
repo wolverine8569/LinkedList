@@ -1,0 +1,32 @@
+Node* segregate(Node *head) {
+        
+        // Add code here
+        Node *dumone=new Node(-1);
+        Node* one=dumone;
+        Node* dumtwo=new Node(-1);
+        Node* two=dumtwo;
+        Node* dumthree=new Node(-1);
+        Node* three=dumthree;
+        while(head!=NULL){
+            if(head->data==0)
+            {
+                one->next=head;
+                one=one->next;
+            }
+            else if(head->data==1)
+            {
+                two->next=head;
+                two=two->next;
+            }
+            else{
+                three->next=head;
+                three=three->next;
+            }
+            head=head->next;
+        }
+        one->next=dumtwo->next?dumtwo->next:dumthree->next;
+        two->next=dumthree->next;
+        three->next=NULL;
+        return dumone->next;
+        
+    }
