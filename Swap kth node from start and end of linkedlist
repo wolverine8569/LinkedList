@@ -1,0 +1,77 @@
+Node *swapkthnode(Node* head, int num, int K)
+{
+    if(head==NULL)
+    return NULL;
+    if(head->next==NULL && K==1)
+    return head;
+    if(num<K)
+    return head;
+    if(num%2==0){
+        int y=num/2;
+        if(K>y){
+            return swapkthnode(head,num,num-K+1);
+        }
+    }
+    else{
+        int y=num/2;
+        if(K>(y+1))
+        return swapkthnode(head,num,num-K+1);
+    }
+    Node* slow=NULL;
+    Node* prev1=NULL,*prev2=NULL;
+    Node* temp=head;
+    int count=1;
+    while(temp){
+        if(count==K)
+        break;
+        prev1=temp;
+        temp=temp->next;
+        count++;
+    }
+    slow=temp;
+    prev2=prev1;
+    while(temp){
+        if(count==(num-K+1))
+        break;
+        prev2=temp;
+        temp=temp->next;
+        count++;
+    }
+    if(K==1){
+        if(slow==prev2){
+          head->next=NULL;
+            temp->next=head;
+            head=temp;
+        }
+        else{
+            Node* loc=head->next;
+            prev2->next=NULL;
+            temp->next=loc;
+            head=temp;
+            slow->next=NULL;
+            prev2->next=slow;
+        }
+    }
+    else{
+    if(slow==temp)
+    return head;
+    else if(slow->next==temp)
+    {
+        Node* loc=temp->next;
+        prev2->next=loc;
+        temp->next=slow;
+        prev1->next=temp;
+        slow->next=loc;
+    }
+    else{
+        //cout<<'p';
+        Node* loc=slow->next;
+            prev2->next=prev2->next->next;
+            temp->next=loc;
+            prev1->next=temp;
+            slow->next=prev2->next;
+            prev2->next=slow;
+    }
+    }
+    return head;
+}
