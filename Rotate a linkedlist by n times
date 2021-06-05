@@ -1,0 +1,23 @@
+    //Function to rotate a linked list.
+    Node* rotate(Node* head, int k)
+    {
+        // Your code here
+        Node* start=head,*temp=head;
+        int count=1;
+        while(temp!=NULL){
+            if(count==k)
+            break;
+            temp=temp->next;
+            count++;
+        }
+        if(temp->next==NULL)
+        return head;
+        Node* newhead;
+        Node* end=temp->next;
+        newhead=end;
+        temp->next=NULL;
+        while(end->next!=NULL)
+        end=end->next;
+        end->next=start;
+        return newhead;
+    }
