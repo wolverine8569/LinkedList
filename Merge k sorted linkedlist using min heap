@@ -1,0 +1,34 @@
+struct myCmp {
+    bool operator()(ListNode* T1,ListNode* T2){
+        return T1->val>T2->val;
+    }
+    };
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        int k=lists.size();
+        if(k==0)
+            return NULL;
+        if(k==1)
+            return lists[0];
+        ListNode* dum=new ListNode(-1);
+        ListNode* dum1=dum;
+         priority_queue <ListNode*, vector<ListNode*>, myCmp> pq;
+        for(int i=0;i<k;i++)
+        {
+            if(lists[i]!=NULL)
+            pq.push(lists[i]);
+        }
+        if(pq.empty())
+            return NULL;
+        while(!pq.empty()){
+            ListNode* xx=pq.top();
+            pq.pop();
+            dum->next=xx;
+            dum=dum->next;
+            if(xx->next!=NULL)
+            {
+                xx=xx->next;
+                pq.push(xx);
+            }
+        }
+        return dum1->next;
+    }
