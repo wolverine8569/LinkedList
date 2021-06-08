@@ -1,0 +1,40 @@
+// like linkedlist is 1->2->3->4->5->6 we have to change it in 1->6->2->5->3->4
+
+ListNode* rev(ListNode* head){
+        ListNode* prev=NULL,*curr=head;
+        while(curr!=NULL){
+            ListNode* temp=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=temp;
+        }
+        return prev;
+    }
+    void reorderList(ListNode* head) {
+        ListNode* slow=head,*fast=head,*curr=head,*prev=NULL;
+        while(fast!=NULL && fast->next!=NULL){
+            prev=slow;
+            slow=slow->next;
+            fast=fast->next->next;
+        }
+        ListNode* newNode;
+        if(fast!=NULL)
+        {
+            prev=slow;
+            slow=slow->next;
+            newNode=rev(slow);
+        }
+        else
+            newNode=rev(slow);
+        ListNode* ch=newNode;
+        prev->next=NULL;
+        ListNode* res=head;
+        while(curr!=NULL && newNode!=NULL){
+            ListNode* nexthead=curr->next;
+            ListNode* nextnew=newNode->next;
+            curr->next=newNode;
+            newNode->next=nexthead;
+            curr=nexthead;
+            newNode=nextnew;
+        }
+    }
